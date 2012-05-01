@@ -3,12 +3,14 @@ function PresentationController($location, keyboard) {
   var scope = this;
   var RIGHT_ARROW = 39;
   var LEFT_ARROW = 37;
+  var PAGE_UP = 33;
+  var PAGE_DOWN = 34;
 
-  keyboard.on(RIGHT_ARROW, function() {
+  keyboard.on([RIGHT_ARROW, PAGE_DOWN], function() {
     scope.activeSlide++;
   });
 
-  keyboard.on(LEFT_ARROW, function() {
+  keyboard.on([LEFT_ARROW, PAGE_UP], function() {
     scope.activeSlide--;
   });
 
@@ -45,9 +47,11 @@ function PresentationController($location, keyboard) {
 angular.service('keyboard', function() {
   var scope = this;
   return {
-    on: function(keyCode, callback) {
+    on: function(keyCodes, callback) {
+      keyCodes = angular.isArray(keyCodes) ? keyCodes : [keyCodes];
+
       $(window).keydown(function(e) {
-        if (e.keyCode == keyCode) {
+        if (keyCodes.indexOf(e.keyCode) !== -1) {
           scope.$apply(callback);
         }
       });
