@@ -1,6 +1,7 @@
+var presentation = angular.module('presentation', []);
 
-function PresentationController($location, keyboard) {
-  var scope = this;
+presentation.controller('PresentationController', function($scope, $location, keyboard) {
+  var scope = $scope;
   var RIGHT_ARROW = 39;
   var LEFT_ARROW = 37;
   var PAGE_UP = 33;
@@ -14,7 +15,7 @@ function PresentationController($location, keyboard) {
     scope.activeSlide--;
   });
 
-  scope.$watch('activeSlide', function(scope, value) {
+  scope.$watch('activeSlide', function(value) {
     if (value == -1) {
       $location.url('');
     } else if (value > -1) {
@@ -22,7 +23,7 @@ function PresentationController($location, keyboard) {
     }
   });
 
-  scope.$watch(function() { return $location.url(); }, function(scope, value) {
+  scope.$watch(function() { return $location.url(); }, function(value) {
     var match = /\/slides\/(\d+)/.exec(value);
     if (match) {
       scope.activeSlide = parseInt(match[1], 10) - 1;
@@ -42,71 +43,76 @@ function PresentationController($location, keyboard) {
   scope.isAfter = function() {
     return scope.activeSlide >= scope.totalSlides;
   };
-}
+});
 
-angular.service('keyboard', function() {
-  var scope = this;
+presentation.factory('keyboard', function($rootScope) {
   return {
     on: function(keyCodes, callback) {
       keyCodes = angular.isArray(keyCodes) ? keyCodes : [keyCodes];
 
       $(window).keydown(function(e) {
         if (keyCodes.indexOf(e.keyCode) !== -1) {
-          scope.$apply(callback);
+          $rootScope.$apply(callback);
         }
       });
     }
   };
 });
 
-angular.widget('deck', function(element) {
-  this.directives(true);
-  this.descend(true);
-  return function() {
-    var slides = element.find('slide');
-    var name = element.attr('current');
-    var total = element.attr('total');
+presentation.directive('deck', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, element, attr) {
+      var slides = element.find('slide');
+      var name = element.attr('current');
+      var total = element.attr('total');
 
-    function restack() {
-      slides.each(function(i, slide) {
-        slide.style.zIndex = 'auto';
-        if ($(slide).hasClass('next')) {
-          slide.style.zIndex = -i;
-        }
-      });
-    }
-
-    restack();
-
-    this.$eval(total + ' = ' + slides.length);
-
-    this.$watch(name, function(scope, value) {
-      slides.each(function(i, slide) {
-        $(slide).removeClass('previous current next');
-        if (i < value) {
-          $(slide).addClass('previous');
-        } else if (i == value) {
-          $(slide).addClass('current');
-        } else {
-          $(slide).addClass('next');
-        }
-      });
-
-      if (value < -1 || isNaN(value)) {
-        scope.$eval(name + ' = -1');
-      } else if (value > slides.length) {
-        scope.$eval(name + ' = ' + slides.length);
+      function restack() {
+        slides.each(function(i, slide) {
+          slide.style.zIndex = 'auto';
+          if ($(slide).hasClass('next')) {
+            slide.style.zIndex = -i;
+          }
+        });
       }
 
       restack();
-    });
+
+      scope.$eval(total + ' = ' + slides.length);
+
+      scope.$watch(name, function(value) {
+        slides.each(function(i, slide) {
+          $(slide).removeClass('previous current next');
+          if (i < value) {
+            $(slide).addClass('previous');
+          } else if (i == value) {
+            $(slide).addClass('current');
+          } else {
+            $(slide).addClass('next');
+          }
+        });
+
+        if (value < -1 || isNaN(value)) {
+          scope.$eval(name + ' = -1');
+        } else if (value > slides.length) {
+          scope.$eval(name + ' = ' + slides.length);
+        }
+
+        restack();
+      });
+    }
   };
 });
 
-angular.widget('@slide:code', function(value, element) {
-  element.addClass('brush: js; toolbar: false;');
-  if (value != 'js') {
-    element.addClass('html-script: true;');
-  }
-  element.attr('ng:non-bindable', '');
+
+presentation.directive('slideCode', function() {
+  return {
+    terminal: true,
+    link: function(scope, element, attr) {
+      element.addClass('brush: js; toolbar: false;');
+      if (attr.slideCode !== 'js') {
+        element.addClass('html-script: true;');
+      }
+    }
+  };
 });

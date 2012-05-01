@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="presentation">
   <head>
     <title>AngularJS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="syntaxhighlighter/shThemeDefault.css" type="text/css">
     <script src="js/jquery-1.7.min.js"></script>
-    <script src="js/angular-0.10.5.min.js" ng:autobind></script>
+    <script src="js/angular-1.0.0rc7.min.js"></script>
     <script src="js/presentation.js"></script>
     <script src="syntaxhighlighter/shCore.js"></script>
     <script src="syntaxhighlighter/shBrushJScript.js"></script>
     <script src="syntaxhighlighter/shBrushXml.js"></script>
     <script>SyntaxHighlighter.all();</script>
   </head>
-  <body ng:controller="PresentationController">
+  <body ng-controller="PresentationController">
 
     <div id="intro">
       <h1>AngularJS</h1>
       <h2>
         Elliott Sprehn
       </h2>
-      <h3 ng:show="isAfter()">@ElliottZ</h3>
+      <h3 ng-show="isAfter()">@ElliottZ</h3>
     </div>
 
-    <p id="counter" ng:show="isInsideDeck()">
+    <p id="counter" ng-show="isInsideDeck()">
       <a href="#/slides/1">&laquo;</a>
       {{activeSlide + 1}} / {{totalSlides}}
       <a href="#/slides/{{totalSlides}}">&raquo;</a>
@@ -104,11 +104,11 @@
           <li>Services
         </ul>
         <script type="syntaxhighlighter" slide:code>
-          <div ng:controller="CommentController">
+          <div ng-controller="CommentController">
             <textarea
-              ng:model="message"
+              ng-model="message"
               name="message"></textarea>
-            <button ng:click="post()">Post</button>
+            <button ng-click="post()">Post</button>
           </div>
         </script>
       </slide>
@@ -125,8 +125,8 @@
         </ul>
         <script type="syntaxhighlighter" slide:code>
           <app:toolbar>
-            <input ng:model="message" name="message">
-            <button ng:click="send(message)">
+            <input ng-model="message" name="message">
+            <button ng-click="send(message)">
               Send message to {{username}}
             </button>
           </app:toolbar>
@@ -141,11 +141,11 @@
       <slide>
         <h2>Two-way data binding</h2>
         <script type="syntaxhighlighter" slide:code>
-          <input ng:model="start" type="date">
-          <input ng:model="end" type="date">
+          <input ng-model="start" type="date">
+          <input ng-model="end" type="date">
           <select
-            ng:model="meal"
-            ng:options="food.name for food in foods">
+            ng-model="meal"
+            ng-options="food.name for food in foods">
           </select>
           <p>
             Dinner is
@@ -163,7 +163,7 @@
           <li>Live updating
         </ul>
         <script type="syntaxhighlighter" slide:code>
-          <div ng:repeat="comment in comments">
+          <div ng-repeat="comment in comments">
             <h2>Posted by {{comment.username}}</h2>
             <p>{{comment.text}}</p>
           </div>
