@@ -166,3 +166,37 @@ slide h3 {
 .syntaxhighlighter .gutter {
   visibility: hidden;
 }
+
+
+/* centering slide */
+
+.center {
+  text-align: center;
+}
+
+.center-wrapper {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.center-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.center li {
+  text-align: left;
+}
+
+.center ul {
+  margin-left: 100px;
+}
+
+
+/* title */
+
+h2.title {
+  position: absolute;
+  width: 100%;
+}
