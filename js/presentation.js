@@ -104,6 +104,22 @@ presentation.directive('deck', function() {
   };
 });
 
+presentation.directive('slide', function() {
+  return {
+    restrict: 'E',
+    compile: function(tpl, attr) {
+
+      if (!tpl.hasClass('non-center')) {
+        tpl.children().wrapAll('<div class="center-wrapper"><div class="center-cell"></div></div>');
+        tpl.addClass('center');
+      }
+
+      if(attr.title) {
+        tpl.prepend('<h2 class="title">' + attr.title + '</h2>');
+      }
+    }
+  };
+});
 
 presentation.directive('slideCode', function() {
   return {
