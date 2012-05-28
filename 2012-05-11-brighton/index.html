@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html ng-app="presentation">
+  <head>
+    <title>AngularJS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="js/jquery-1.7.min.js"></script>
+    <script src="js/angular-1.0.0rc7.min.js"></script>
+    <script src="js/presentation.js"></script>
+  </head>
+  <body ng-controller="PresentationController">
+
+    <div id="intro">
+      <img src="images/AngularShieldLogo.png">
+      <h2>Vojta Jína</h2>
+
+      <h3 ng-show="isAfter()">@vojtajina</h3>
+    </div>
+
+    <deck current="activeSlide" total="totalSlides">
+
+
+      <!--
+        * introduction
+        * gonna talk about web apps
+        * who does build web apps ?
+        * it is hard
+      -->
+
+
+      <!--
+        * doesn't have to be hard
+        * believe we can make it simple and fun
+        * glad to be here to show AngularJS
+      -->
+      <slide>
+        <h1>WHY ?</h1>
+      </slide>
+
+
+
+      <!--
+        * before we build an app, let's see what is the problem
+      -->
+      <slide>
+        <h1>A BIT OF HISTORY</h1>
+      </slide>
+
+
+
+      <!--
+        * scientific documents + sharing them across the internet
+        * remember the gray pages with blue links ?
+        * that's what HTML was meant to be
+      -->
+      <slide title="A bit of History">
+        <img src="images/history-html.png"><br>
+        <p>Markup language for scientific documents.</p>
+      </slide>
+
+
+
+      <!--
+        * tiny DOM manipulation
+        * very slow
+        * starting round-trip web apps
+      -->
+      <slide title="A bit of History">
+        <img src="images/history-js.png"><br>
+        <p>Scripting language for HTML documents.</p>
+      </slide>
+
+
+
+      <!--
+        * still server side rendering (django, spring, rails, ...)
+        * ajax
+      -->
+      <slide title="A bit of History">
+        <img src="images/history-ajax.png"><br>
+        <img src="images/gmail-gmaps.png">
+      </slide>
+
+
+
+      <!--
+        * JS engines have improved a lot
+        * CSS has improved a lot
+        * HTML5 - cool stuff
+      -->
+      <slide title="A bit of History">
+        <img src="images/history-2012.png"><br>
+        <p><strong>Still the same level of abstraction !</strong></p>
+      </slide>
+
+
+      <!--
+        * Angular makes you more productive by rising the level of abstraction
+        * EXAMPLE TODO APP
+      -->
+      <slide>
+        <h1>HIGHER ABSTRACTION</h1>
+      </slide>
+
+
+
+      <!--
+        * believe in testing
+        * very important at google
+        * do you do TDD ?
+        * it's hard
+      -->
+      <slide>
+        <h1>TESTING</h1>
+      </slide>
+
+
+
+      <!-- -->
+      <slide title="Testing Environment">
+        <ul>
+          <li>LIBRARIES</li>
+          <li>TOOLS</li>
+          <li>SET UP</li>
+        </ul>
+      </slide>
+
+
+
+      <!-- -->
+      <slide title="Testable Code">
+        <ul>
+          <li>DATA BINDING</li>
+          <li>DEPENDENCY INJECTION</li>
+          <li>MOCKS</li>
+        </ul>
+      </slide>
+
+
+
+      <!--
+        join the community:
+        * github
+        * mailing list
+        * youtube videos
+        * stack overflow
+      -->
+      <slide title="AngularJS">
+        <ul>
+          <li>OPEN SOURCE AT GITHUB</li>
+          <li>GOOGLE FUNDED</li>
+        </ul>
+      </slide>
+
+
+
+      <!-- -->
+      <slide>
+        <h1>THANK YOU</h1>
+      </slide>
+
+    </deck>
+
+  </body>
+</html>
