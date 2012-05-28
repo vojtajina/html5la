@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="presentation">
+  <head>
+    <title>AngularJS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="js/jquery-1.7.min.js"></script>
+    <script src="js/angular-1.0.0rc7.min.js"></script>
+    <script src="js/presentation.js"></script>
+  </head>
+  <body ng-controller="PresentationController">
+
+    <div id="intro">
+      <img src="images/AngularShieldLogo.png">
+      <h2>Vojta Jína</h2>
+
+      <h3 ng-show="isAfter()">vojta@google.com</h3>
+    </div>
+
+    <deck current="activeSlide" total="totalSlides">
+
+      <slide>
+        <h1>WHY ?</h1>
+      </slide>
+
+
+      <slide>
+        <h1>A DIFFERENT WAY</h1>
+        <h3>TO BUILD WEB APPS</h3>
+      </slide>
+
+
+      <slide>
+        <h3>TWO WAY</h3>
+        <h1>DATA BINDING</h1>
+      </slide>
+
+
+      <slide title="Data Binding">
+        <h2>LESS TYPING</h2>
+        <h2 step="1">READABLE</h2>
+        <h2 step="2">TESTABLE</h2>
+      </slide>
+
+
+      <slide>
+        <h1 class="big">?</h1>
+      </slide>
+
+
+      <slide>
+        <h1>DEPENDENCY INJECTION</h1>
+      </slide>
+
+
+      <slide title="Dependency Injection">
+        <h2>LESS TYPING</h2>
+        <h2 step="1">MAINTENABLE</h2>
+        <h2 step="2">TESTABLE</h2>
+      </slide>
+
+
+      <slide>
+        <h1 class="big">?</h1>
+      </slide>
+
+
+      <slide>
+        <h3>EVERYTHING IS</h3>
+        <h1>EXTENSIBLE</h1>
+      </slide>
+
+
+      <slide>
+        <h1 class="big">?</h1>
+      </slide>
+
+
+      <slide title="AngularJS">
+        <h2 step="1">SOURCE ON GITHUB</h2>
+        <h2 step="2">GOOGLE FUNDED</h2>
+      </slide>
+
+    </deck>
+
+  </body>
+</html>
