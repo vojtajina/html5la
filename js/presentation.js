@@ -12,7 +12,9 @@ presentation.controller('PresentationController', function($scope, $location, ke
   */
 
   keyboard.on([RIGHT_ARROW, PAGE_DOWN], function() {
-    if ($scope.activeSlide < $scope.totalSlides - 1) {
+    if ($scope.activeStep < $scope.totalSteps) {
+      $scope.activeStep++;
+    } else if ($scope.activeSlide < $scope.totalSlides - 1) {
       $location.path('/slides/' + ($scope.activeSlide + 2));
     } else if ($scope.activeSlide === $scope.totalSlides - 1) {
       $location.path('/slides/end');
@@ -31,12 +33,15 @@ presentation.controller('PresentationController', function($scope, $location, ke
     if (!match) {
       $location.path('/slides/');
     } else if (match[1] === '') {
+      $scope.activeStep = 0;
       $scope.activeSlide = -1;
     } else if (match[1] === 'end') {
+      $scope.activeStep = 0;
       $scope.activeSlide = $scope.totalSlides;
     } else {
       var i = parseInt(match[1], 10);
       if (1 <= i && i <= $scope.totalSlides) {
+        $scope.activeStep = ($scope.activeSlide > i - 1) ? Number.MAX_VALUE : 0;
         $scope.activeSlide = i - 1;
       } else {
         $location.path('/slides/');
@@ -79,13 +84,19 @@ presentation.directive('deck', function() {
 
       scope.$eval(attr.total + ' = ' + slides.length);
 
+      slides.each(function(i, slide) {
+        $(slide).scope().$index = i;
+      });
+
       scope.$watch(attr.current, function(value) {
+        scope.totalSteps = 0;
         slides.each(function(i, slide) {
           $(slide).removeClass('previous current next');
           if (i < value) {
             $(slide).addClass('previous');
           } else if (i == value) {
             $(slide).addClass('current');
+            scope.totalSteps = $(slide).scope().totalSteps || 0;
           } else {
             $(slide).addClass('next');
           }
@@ -106,6 +117,7 @@ presentation.directive('deck', function() {
 presentation.directive('slide', function() {
   return {
     restrict: 'E',
+    scope: true,
     compile: function(tpl, attr) {
 
       if (!tpl.hasClass('non-center')) {
@@ -119,6 +131,24 @@ presentation.directive('slide', function() {
     }
   };
 });
+
+presentation.directive('step', function() {
+  return function(scope, elm, attr) {
+    var step = parseInt(attr.step, 10);
+
+    scope.totalSteps = Math.max(scope.totalSteps || 0, step);
+
+    scope.$watch('activeStep', function(activeStep) {
+      if (scope.activeSlide === scope.$index) {
+        elm.css('visibility', step <= activeStep ? 'visible' : 'hidden');
+      } else if (scope.activeSlide < scope.$index) {
+        elm.css('visibility', 'hidden');
+      } else {
+        elm.css('visibility', 'visible');
+      }
+    });
+  }
+})
 
 presentation.directive('slideCode', function() {
   return {
